@@ -17,7 +17,7 @@ const TodoForm = ({
   setPriority,
 }: TodoFormProps) => {
   return (
-    <div className="flex gap-2 justify-center my-8">
+    <div className="flex flex-wrap gap-2 justify-center my-8">
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
