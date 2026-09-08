@@ -30,7 +30,7 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
   };
 
   return (
-    <div className="my-4 flex justify-between bg-gray-400 dark:bg-purple-900 p-2 rounded-md">
+    <div className="my-4 flex flex-col md:flex-row justify-between gap-2 bg-gray-400 dark:bg-purple-900 p-2 rounded-md relative">
       <div
         className={`text-black dark:text-white ${todo.completed ? "line-through" : ""}`}
       >
@@ -39,12 +39,12 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
         <p className="text-sm">priority : {todo.priority}</p>
       </div>
       <div className="flex items-center gap-2 text-xl cursor-pointer text-white transition duration-600">
-        <div>
+        <div className="flex">
           {isEditing ? (
             <input
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
-              className="border text-black dark:text-white outline-none p-1 mr-3"
+              className="border text-black dark:text-white outline-none p-1 mr-3 max-w-44"
             />
           ) : (
             ""
