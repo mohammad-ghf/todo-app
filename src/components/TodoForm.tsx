@@ -27,7 +27,7 @@ const TodoForm = ({
       />
 
       <select
-        className="bg-gray-700 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 text-sm rounded-md outline-none"
+        className="bg-gray-700 dark:bg-purple-800 text-white cursor-pointer py-3 dark:hover:bg-purple-900 text-sm rounded-md outline-none"
         value={priority}
         onChange={(e) => setPriority(e.target.value as Priority)}
       >
@@ -38,7 +38,7 @@ const TodoForm = ({
 
       <button
         onClick={addTodo}
-        className="flex-1 bg-gray-700 cursor-pointerbg-gray-500 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 text-sm rounded-md"
+        className="flex-1 py-3 bg-gray-700 cursor-pointerbg-gray-500 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 text-sm rounded-md"
       >
         Add Todo
       </button>
