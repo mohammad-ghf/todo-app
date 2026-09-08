@@ -47,7 +47,7 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
       <button
         {...attributes}
         {...listeners}
-        className="shrink-0 cursor-grab p-1 text-xl text-black active:cursor-grabbing dark:text-white"
+        className="touch-none shrink-0 cursor-grab p-1 text-xl text-black active:cursor-grabbing dark:text-white"
       >
         <MdDragHandle />
       </button>
