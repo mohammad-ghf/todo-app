@@ -46,59 +46,62 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
     <div
       ref={setNodeRef}
       style={style}
-      className="my-4 flex flex-col md:flex-row justify-between items-center gap-2 bg-gray-400 dark:bg-purple-900 p-2 rounded-md relative"
+      className="my-4 flex flex-row justify-betwee items-center md:items-center gap-2 bg-gray-400 dark:bg-purple-900 p-2 rounded-md relative"
     >
       <div
         {...attributes}
         {...listeners}
-        className="text-2xl dark:text-white text-black cursor-pointer"
+        className="text-2xl dark:text-white text-black cursor-pointer p-3"
       >
         <MdDragHandle />
       </div>
-      <div
-        className={`text-black dark:text-white flex-2 ${todo.completed ? "line-through" : ""}`}
-      >
-        <p>{todo.title}</p>
 
-        <p className="text-sm">priority : {todo.priority}</p>
-      </div>
-
-      <div className="flex items-center gap-2 text-xl cursor-pointer text-white transition duration-600">
-        <div className="flex">
-          {isEditing ? (
-            <input
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              className="border text-black dark:text-white outline-none p-1 mr-3 max-w-44"
-            />
-          ) : (
-            ""
-          )}
-          {isEditing ? (
-            <button
-              className="text-black dark:text-white cursor-pointer"
-              onClick={handleEdit}
-            >
-              <FaSave />
-            </button>
-          ) : (
-            <button onClick={() => setIsEditing(true)}>
-              {" "}
-              <MdEdit className="text-black dark:text-white" />
-            </button>
-          )}
-        </div>
-
+      <div className="flex flex-col md:flex-row gap-3 justify-between w-full">
         <div
-          onClick={() => completeTodo(todo.id)}
-          className="text-black dark:text-white px-1"
+          className={`text-black dark:text-white flex-2 ${todo.completed ? "line-through" : ""}`}
         >
-          {todo.completed ? <FaCheckCircle /> : <FaRegCircle />}
+          <p>{todo.title}</p>
+
+          <p className="text-sm">priority : {todo.priority}</p>
         </div>
-        <FaTrash
-          onClick={() => deleteTodo(todo.id)}
-          className="text-black dark:text-white"
-        />
+
+        <div className="flex items-center gap-2 text-xl cursor-pointer text-white transition duration-600">
+          <div className="flex">
+            {isEditing ? (
+              <input
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                className="border text-black dark:text-white outline-none p-1 mr-3 max-w-44"
+              />
+            ) : (
+              ""
+            )}
+            {isEditing ? (
+              <button
+                className="text-black dark:text-white cursor-pointer"
+                onClick={handleEdit}
+              >
+                <FaSave />
+              </button>
+            ) : (
+              <button onClick={() => setIsEditing(true)}>
+                {" "}
+                <MdEdit className="text-black dark:text-white" />
+              </button>
+            )}
+          </div>
+
+          <div
+            onClick={() => completeTodo(todo.id)}
+            className="text-black dark:text-white px-1"
+          >
+            {todo.completed ? <FaCheckCircle /> : <FaRegCircle />}
+          </div>
+          <FaTrash
+            onClick={() => deleteTodo(todo.id)}
+            className="text-black dark:text-white"
+          />
+        </div>
       </div>
     </div>
   );
