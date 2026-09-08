@@ -58,6 +58,16 @@ function TodoApp() {
   const taskLeftQty = todos.filter((todo) => !todo.completed).length;
   const taskcompleteQty = todos.filter((todo) => todo.completed).length;
 
+  const moveTodo = (oldIndex: number, newIndex: number) => {
+    setTodos((prev) => {
+      const newTodos = [...prev];
+      const [moveTodo] = newTodos.splice(oldIndex, 1);
+      newTodos.splice(newIndex, 0, moveTodo);
+
+      return newTodos;
+    });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-white dark:bg-slate-800 p-2">
       <div className="w-[90%] max-w-125 p-4 bg-mist-300 dark:bg-slate-900 shadow-md rounded-md">
@@ -93,10 +103,17 @@ function TodoApp() {
             completeTodo={completeTodo}
             deleteTodo={deleteTodo}
             editTodo={editTodo}
+            moveTodo={moveTodo}
           />
-          <p className="text-black dark:text-white text-sm">{taskLeftQty} task left</p>
-          <p className="text-black dark:text-white text-sm">{taskcompleteQty} task complete</p>
-          <p className="text-black dark:text-white text-sm">{todos.length} all task</p>
+          <p className="text-black dark:text-white text-sm">
+            {taskLeftQty} task left
+          </p>
+          <p className="text-black dark:text-white text-sm">
+            {taskcompleteQty} task complete
+          </p>
+          <p className="text-black dark:text-white text-sm">
+            {todos.length} all task
+          </p>
         </div>
       </div>
     </div>

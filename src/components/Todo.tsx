@@ -4,6 +4,9 @@ import { FaRegCircle } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
 import type { Priority } from "../types/todo";
 import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { MdDragHandle } from "react-icons/md";
 
 type TodoProp = {
   todo: {
@@ -29,15 +32,37 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
     setIsEditing(false);
   };
 
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({
+      id: todo.id,
+    });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   return (
-    <div className="my-4 flex flex-col md:flex-row justify-between gap-2 bg-gray-400 dark:bg-purple-900 p-2 rounded-md relative">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="my-4 flex flex-col md:flex-row justify-between items-center gap-2 bg-gray-400 dark:bg-purple-900 p-2 rounded-md relative"
+    >
       <div
-        className={`text-black dark:text-white ${todo.completed ? "line-through" : ""}`}
+        {...attributes}
+        {...listeners}
+        className="text-2xl dark:text-white text-black cursor-pointer"
       >
-        {todo.title}
+        <MdDragHandle />
+      </div>
+      <div
+        className={`text-black dark:text-white flex-2 ${todo.completed ? "line-through" : ""}`}
+      >
+        <p>{todo.title}</p>
 
         <p className="text-sm">priority : {todo.priority}</p>
       </div>
+
       <div className="flex items-center gap-2 text-xl cursor-pointer text-white transition duration-600">
         <div className="flex">
           {isEditing ? (
