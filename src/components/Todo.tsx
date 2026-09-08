@@ -31,13 +31,13 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
 
   return (
     <div className="my-4 flex justify-between bg-gray-400 dark:bg-purple-900 p-2 rounded-md">
-      <p
+      <div
         className={`text-black dark:text-white ${todo.completed ? "line-through" : ""}`}
       >
         {todo.title}
 
         <p className="text-sm">priority : {todo.priority}</p>
-      </p>
+      </div>
       <div className="flex items-center gap-2 text-xl cursor-pointer text-white transition duration-600">
         <div>
           {isEditing ? (
