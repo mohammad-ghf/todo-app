@@ -1,12 +1,9 @@
-import { FaCheckCircle, FaTrash } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { FaRegCircle } from "react-icons/fa";
-import { FaSave } from "react-icons/fa";
-import type { Priority } from "../types/todo";
 import { useState } from "react";
+import { FaCheckCircle, FaTrash, FaRegCircle, FaSave } from "react-icons/fa";
+import { MdEdit, MdDragHandle } from "react-icons/md";
+import type { Priority } from "../types/todo";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { MdDragHandle } from "react-icons/md";
 
 type TodoProp = {
   todo: {
@@ -15,7 +12,6 @@ type TodoProp = {
     completed: boolean;
     priority: Priority;
   };
-
   completeTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
   editTodo: (id: number, title: string) => void;
@@ -46,62 +42,73 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
     <div
       ref={setNodeRef}
       style={style}
-      className="my-4 flex flex-row justify-betwee items-center md:items-center gap-2 bg-gray-400 dark:bg-purple-900 p-2 rounded-md relative"
+      className="my-3 flex w-full items-center gap-2 rounded-md bg-gray-400 p-2 dark:bg-purple-900"
     >
-      <div
+      <button
         {...attributes}
         {...listeners}
-        className="text-2xl dark:text-white text-black cursor-pointer p-3"
+        className="shrink-0 cursor-grab p-1 text-xl text-black active:cursor-grabbing dark:text-white"
       >
         <MdDragHandle />
+      </button>
+
+      <div className="min-w-0 flex-1">
+        {isEditing ? (
+          <div className="flex w-full items-center gap-2">
+            <input
+              autoFocus
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              className="min-w-0 flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-black outline-none dark:bg-slate-800 dark:text-white"
+            />
+
+            <button
+              onClick={handleEdit}
+              className="shrink-0 cursor-pointer text-lg text-black dark:text-white"
+            >
+              <FaSave />
+            </button>
+          </div>
+        ) : (
+          <>
+            <p
+              className={`wrap-break-word text-sm text-black md:text-base dark:text-white ${
+                todo.completed ? "line-through" : ""
+              }`}
+            >
+              {todo.title}
+            </p>
+
+            <p className="mt-1 text-xs text-gray-700 dark:text-gray-300">
+              priority: {todo.priority}
+            </p>
+          </>
+        )}
       </div>
 
-      <div className="flex flex-col md:flex-row gap-3 justify-between w-full">
-        <div
-          className={`text-black dark:text-white flex-2 ${todo.completed ? "line-through" : ""}`}
-        >
-          <p>{todo.title}</p>
-
-          <p className="text-sm">priority : {todo.priority}</p>
-        </div>
-
-        <div className="flex items-center gap-2 text-xl cursor-pointer text-white transition duration-600">
-          <div className="flex">
-            {isEditing ? (
-              <input
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                className="border text-black dark:text-white outline-none p-1 mr-3 max-w-44"
-              />
-            ) : (
-              ""
-            )}
-            {isEditing ? (
-              <button
-                className="text-black dark:text-white cursor-pointer"
-                onClick={handleEdit}
-              >
-                <FaSave />
-              </button>
-            ) : (
-              <button onClick={() => setIsEditing(true)}>
-                {" "}
-                <MdEdit className="text-black dark:text-white" />
-              </button>
-            )}
-          </div>
-
-          <div
-            onClick={() => completeTodo(todo.id)}
-            className="text-black dark:text-white px-1"
+      <div className="flex shrink-0 items-center gap-2 text-lg md:gap-3 md:text-xl">
+        {!isEditing && (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="cursor-pointer text-black dark:text-white"
           >
-            {todo.completed ? <FaCheckCircle /> : <FaRegCircle />}
-          </div>
-          <FaTrash
-            onClick={() => deleteTodo(todo.id)}
-            className="text-black dark:text-white"
-          />
-        </div>
+            <MdEdit />
+          </button>
+        )}
+
+        <button
+          onClick={() => completeTodo(todo.id)}
+          className="cursor-pointer text-black dark:text-white"
+        >
+          {todo.completed ? <FaCheckCircle /> : <FaRegCircle />}
+        </button>
+
+        <button
+          onClick={() => deleteTodo(todo.id)}
+          className="cursor-pointer text-black dark:text-white"
+        >
+          <FaTrash />
+        </button>
       </div>
     </div>
   );
