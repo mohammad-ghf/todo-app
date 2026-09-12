@@ -13,14 +13,14 @@ function TodoApp() {
   const [todos, setTodos] = useLocalStorage<TodoType[]>("todos", []);
   const [filter, setFilter] = useState<Filter>("all");
 
-  const addTodo = () => {
+  const addTodo = (title: string, description: string, priority: Priority) => {
     if (!input.trim()) return;
     const newTodo: TodoType = {
       id: Date.now(),
-      title: input,
+      title,
       completed: false,
-      priority: priority,
-      description:""
+      priority,
+      description,
     };
 
     setTodos((prev) => [...prev, newTodo]);
@@ -89,7 +89,7 @@ function TodoApp() {
             setFilter={setFilter}
           />
 
-          <AddTodo addTodo={addTodo} />
+          <AddTodo addTodo={addTodo} input={input} priority={priority} />
         </div>
 
         <div>
