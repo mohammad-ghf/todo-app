@@ -25,7 +25,7 @@ const TodoForm = ({
         onChange={(e) => setInput(e.target.value)}
         type="text"
         className="flex-1 border-gray-500 outline-none border-2 p-2  placeholder-gray-500 text-black dark:text-white rounded-md"
-        placeholder="Add Task"
+        placeholder="Add Task Name"
       />
 
       <select
