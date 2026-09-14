@@ -93,7 +93,7 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
       </div>
 
       <div className="flex shrink-0 items-center gap-2 text-lg md:gap-3 md:text-xl">
-        {!isEditing && (
+        {!isEditing && !todo.completed && (
           <button
             onClick={() => setIsEditing(true)}
             className="cursor-pointer text-black dark:text-white"

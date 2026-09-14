@@ -11,27 +11,23 @@ type todoDescriptionProps = {
   title: string;
 };
 
-const TodoDescription = ({ description, todoId, title }: todoDescriptionProps) => {
+const TodoDescription = ({
+  description,
+  todoId,
+  title,
+}: todoDescriptionProps) => {
   if (!description.trim()) return null;
 
   if (!description.trim()) {
-    return <p>{title}</p>
+    return <p>{title}</p>;
   }
 
   return (
     <Accordion>
       <AccordionItem className="" value={`description-${todoId}`}>
-        <AccordionTrigger
-          className=""
-        >
-          {title}
-        </AccordionTrigger>
+        <AccordionTrigger className="">{title}</AccordionTrigger>
 
-        <AccordionContent
-          className=""
-        >
-          {description}
-        </AccordionContent>
+        <AccordionContent className="">{description}</AccordionContent>
       </AccordionItem>
     </Accordion>
   );

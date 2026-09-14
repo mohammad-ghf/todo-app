@@ -7,7 +7,7 @@ type TodoFormProps = {
   setInput: Dispatch<SetStateAction<string>>;
   setPriority: Dispatch<SetStateAction<Priority>>;
   filter: Filter;
-  setFilter: Dispatch<SetStateAction<Filter>>
+  setFilter: Dispatch<SetStateAction<Filter>>;
 };
 
 const TodoForm = ({
@@ -16,7 +16,7 @@ const TodoForm = ({
   setInput,
   setPriority,
   filter,
-  setFilter
+  setFilter,
 }: TodoFormProps) => {
   return (
     <div className="flex flex-wrap gap-2 justify-center mt-8 mb-3.5">
@@ -43,12 +43,16 @@ const TodoForm = ({
         value={filter}
         className="bg-gray-700 dark:bg-purple-800 dark:hover:bg-purple-900 text-white rounded-md cursor-pointer outline-none text-sm"
       >
-        <option className="cursor-pointer" value="all">all</option>
-        <option className="cursor-pointer" value="active">active</option>
-        <option className="cursor-pointer" value="completed">completed</option>
+        <option className="cursor-pointer" value="all">
+          all
+        </option>
+        <option className="cursor-pointer" value="active">
+          active
+        </option>
+        <option className="cursor-pointer" value="completed">
+          completed
+        </option>
       </select>
-
-
     </div>
   );
 };

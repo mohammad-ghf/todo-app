@@ -5,13 +5,15 @@ import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import Theme from "./Theme";
 import AddTodo from "./AddTodo";
+import { FaSearch } from "react-icons/fa";
 
-function TodoApp() {
+const TodoApp = () => {
   const [darkMode, setDarkMode] = useLocalStorage<boolean>("darkMode", false);
   const [input, setInput] = useState<string>("");
   const [priority, setPriority] = useState<Priority>("medium");
   const [todos, setTodos] = useLocalStorage<TodoType[]>("todos", []);
   const [filter, setFilter] = useState<Filter>("all");
+  const [search, setSearch] = useState("");
 
   const addTodo = (title: string, description: string, priority: Priority) => {
     if (!input.trim()) return;
@@ -46,15 +48,19 @@ function TodoApp() {
   };
 
   const filteredTodos = todos.filter((todo) => {
+    const matchesSearch = todo.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
     if (filter === "active") {
-      return !todo.completed;
+      return !todo.completed && matchesSearch;
     }
 
     if (filter === "completed") {
-      return todo.completed;
+      return todo.completed && matchesSearch;
     }
 
-    return true;
+    return matchesSearch;
   });
 
   const taskLeftQty = todos.filter((todo) => !todo.completed).length;
@@ -76,6 +82,16 @@ function TodoApp() {
         <div className="flex justify-between items-center">
           <h1 className="text-black dark:text-white text-3xl">TODOS</h1>
           <div className="flex items-center gap-3.5">
+            <div className="flex items-center gap-2 relative">
+              <input
+                type="search"
+                placeholder="Search"
+                className="dark:border-white border-black border outline-none px-2 py-1 rounded-md w-56"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <FaSearch className="absolute right-3" />
+            </div>
             <Theme darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
         </div>
@@ -116,6 +132,6 @@ function TodoApp() {
       </div>
     </div>
   );
-}
+};
 
 export default TodoApp;

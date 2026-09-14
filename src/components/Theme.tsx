@@ -8,7 +8,7 @@ type themeProps = {
 };
 const Theme = ({ darkMode, setDarkMode }: themeProps) => {
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", darkMode);    
+    document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
   return (
     <div className="text-xl">
