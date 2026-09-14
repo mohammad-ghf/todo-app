@@ -121,7 +121,7 @@ const AddTodo = ({ addTodo, input, priority }: AddTodoPProps) => {
           </div>
 
           <div>
-            <Button className="cursor-pointer" onClick={handleAddTodo}>
+            <Button className="cursor-pointer w-full" onClick={handleAddTodo}>
               {" "}
               Add Task
             </Button>

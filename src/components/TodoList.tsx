@@ -1,4 +1,4 @@
-import type { TodoType } from "../types/todo";
+import type { Priority, TodoType } from "../types/todo";
 import Todo from "./Todo";
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
 import {
@@ -10,7 +10,7 @@ type TodoListProps = {
   todos: TodoType[];
   completeTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
-  editTodo: (id: number, title: string) => void;
+  editTodo: (id: number, title: string, description:string, priority:Priority) => void;
   moveTodo: (oldIndex: number, newIndex: number) => void;
 };
 

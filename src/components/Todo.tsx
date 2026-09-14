@@ -1,28 +1,25 @@
 import { useState } from "react";
 import { FaCheckCircle, FaTrash, FaRegCircle, FaSave } from "react-icons/fa";
-import { MdEdit, MdDragHandle } from "react-icons/md";
-import type { TodoType } from "../types/todo";
+import { MdDragHandle } from "react-icons/md";
+import type { Priority, TodoType } from "../types/todo";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TodoDescription from "./TodoDescription";
+import EditTodoModal from "./EditTodoModal";
 
 type TodoProp = {
   todo: TodoType;
   completeTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
-  editTodo: (id: number, title: string) => void;
+  editTodo: (
+    id: number,
+    title: string,
+    description: string,
+    priority: Priority,
+  ) => void;
 };
 
-const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editTitle, setEditTitle] = useState(todo.title);
-
-  const handleEdit = () => {
-    if (!editTitle.trim()) return;
-
-    editTodo(todo.id, editTitle);
-    setIsEditing(false);
-  };
+const Todo = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -49,58 +46,31 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
       </button>
 
       <div className="min-w-0 flex-1">
-        {isEditing ? (
-          <div className="flex w-full items-center gap-2">
-            <input
-              autoFocus
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              className="min-w-0 flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm text-black outline-none dark:bg-slate-800 dark:text-white"
-            />
-
-            <button
-              onClick={handleEdit}
-              className="shrink-0 cursor-pointer text-lg text-black dark:text-white"
-            >
-              <FaSave />
-            </button>
+        <div>
+          <div
+            className={`wrap-break-word text-sm text-black md:text-base dark:text-white ${
+              todo.completed ? "line-through" : ""
+            }`}
+          >
+            {todo.description.length === 0 ? (
+              <p>{todo.title}</p>
+            ) : (
+              <TodoDescription
+                title={todo.title}
+                description={todo.description}
+                todoId={todo.id}
+              />
+            )}
           </div>
-        ) : (
-          <>
-            <div>
-              <div
-                className={`wrap-break-word text-sm text-black md:text-base dark:text-white ${
-                  todo.completed ? "line-through" : ""
-                }`}
-              >
-                {todo.description.length === 0 ? (
-                  <p>{todo.title}</p>
-                ) : (
-                  <TodoDescription
-                    title={todo.title}
-                    description={todo.description}
-                    todoId={todo.id}
-                  />
-                )}
-              </div>
-            </div>
+        </div>
 
-            <p className="text-xs text-gray-700 dark:text-gray-300">
-              priority: {todo.priority}
-            </p>
-          </>
-        )}
+        <p className="text-xs text-gray-700 dark:text-gray-300">
+          priority: {todo.priority}
+        </p>
       </div>
 
       <div className="flex shrink-0 items-center gap-2 text-lg md:gap-3 md:text-xl">
-        {!isEditing && !todo.completed && (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="cursor-pointer text-black dark:text-white"
-          >
-            <MdEdit />
-          </button>
-        )}
+        {!todo.completed && <EditTodoModal todo={todo} editTodo={editTodo} />}
 
         <button
           onClick={() => completeTodo(todo.id)}
@@ -120,4 +90,4 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
   );
 };
 
-export default Task;
+export default Todo;

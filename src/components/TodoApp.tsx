@@ -41,9 +41,9 @@ const TodoApp = () => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const editTodo = (id: number, title: string) => {
+  const editTodo = (id: number, title: string, description: string, priority:Priority) => {
     setTodos((prev) =>
-      prev.map((todo) => (todo.id === id ? { ...todo, title } : todo)),
+      prev.map((todo) => (todo.id === id ? { ...todo, title, description, priority } : todo)),
     );
   };
 
