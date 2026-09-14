@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { FaCheckCircle, FaTrash, FaRegCircle, FaSave } from "react-icons/fa";
+import { FaCheckCircle, FaTrash, FaRegCircle } from "react-icons/fa";
 import { MdDragHandle } from "react-icons/md";
 import type { Priority, TodoType } from "../types/todo";
 import { useSortable } from "@dnd-kit/sortable";
@@ -37,13 +36,13 @@ const Todo = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
       style={style}
       className="my-3 flex w-full items-center gap-2 rounded-md bg-gray-400 p-2 dark:bg-purple-900"
     >
-      <button
+      <div
         {...attributes}
         {...listeners}
-        className="touch-none shrink-0 cursor-grab p-1 text-xl text-black active:cursor-grabbing dark:text-white"
+        className="touch-none shrink-0 cursor-grab p-3 text-xl text-black active:cursor-grabbing dark:text-white"
       >
         <MdDragHandle />
-      </button>
+      </div>
 
       <div className="min-w-0 flex-1">
         <div>
