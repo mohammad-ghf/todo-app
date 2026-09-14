@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
 type DeleteTodoProps = {
@@ -14,8 +15,9 @@ type DeleteTodoProps = {
 };
 
 const DeleteTodoDialog = ({ onConfirm }: DeleteTodoProps) => {
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger render={<button className="cursor-pointer" />}>
         <FaTrash />
       </DialogTrigger>
@@ -32,7 +34,10 @@ const DeleteTodoDialog = ({ onConfirm }: DeleteTodoProps) => {
         <DialogFooter>
           <button
             type="button"
-            onClick={onConfirm}
+            onClick={() => {
+              onConfirm();
+              setOpen(false);
+            }}
             className="rounded-md border px-4 py-2 cursor-pointer"
           >
             Delete

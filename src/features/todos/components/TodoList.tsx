@@ -1,4 +1,4 @@
-import type { Priority, TodoType } from "../types/todo";
+import type { Priority, TodoType } from "../types/todo.types";
 import Todo from "./Todo";
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
 import {
@@ -10,8 +10,13 @@ type TodoListProps = {
   todos: TodoType[];
   completeTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
-  editTodo: (id: number, title: string, description:string, priority:Priority) => void;
-  moveTodo: (oldIndex: number, newIndex: number) => void;
+  editTodo: (
+    id: number,
+    title: string,
+    description: string,
+    priority: Priority,
+  ) => void;
+  moveTodo: (activeId: number, overId: number) => void;
 };
 
 const TodoList = ({
@@ -26,11 +31,7 @@ const TodoList = ({
 
     if (!over || active.id === over.id) return;
 
-    const oldIndex = todos.findIndex((todo) => todo.id === active.id);
-
-    const newIndex = todos.findIndex((todo) => todo.id === over.id);
-
-    moveTodo(oldIndex, newIndex);
+    moveTodo(Number(active.id), Number(over.id));
   };
 
   return (

@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion";
+} from "@/components/ui/accordion";
 
 type todoDescriptionProps = {
   description: string;
@@ -16,18 +16,13 @@ const TodoDescription = ({
   todoId,
   title,
 }: todoDescriptionProps) => {
-  if (!description.trim()) return null;
-
-  if (!description.trim()) {
-    return <p>{title}</p>;
-  }
 
   return (
     <Accordion>
-      <AccordionItem className="" value={`description-${todoId}`}>
-        <AccordionTrigger className="">{title}</AccordionTrigger>
+      <AccordionItem value={`description-${todoId}`}>
+        <AccordionTrigger>{title}</AccordionTrigger>
 
-        <AccordionContent className="">{description}</AccordionContent>
+        <AccordionContent>{description}</AccordionContent>
       </AccordionItem>
     </Accordion>
   );

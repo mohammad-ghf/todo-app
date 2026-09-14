@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { Filter, Priority } from "../types/todo";
+import type { Filter, Priority } from "../types/todo.types";
+import TodoFilter from "./TodoFilter";
 
 type TodoFormProps = {
   input: string;
@@ -38,21 +39,7 @@ const TodoForm = ({
         <option value="high">high</option>
       </select>
 
-      <select
-        onChange={(e) => setFilter(e.target.value as Filter)}
-        value={filter}
-        className="bg-gray-700 dark:bg-purple-800 dark:hover:bg-purple-900 text-white rounded-md cursor-pointer outline-none text-sm"
-      >
-        <option className="cursor-pointer" value="all">
-          all
-        </option>
-        <option className="cursor-pointer" value="active">
-          active
-        </option>
-        <option className="cursor-pointer" value="completed">
-          completed
-        </option>
-      </select>
+      <TodoFilter filter={filter} setFilter={setFilter} />
     </div>
   );
 };

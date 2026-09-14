@@ -3,13 +3,13 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
+  DialogTitle,
 } from "@/components/ui/dialog";
-import type { Priority, TodoType } from "@/types/todo";
+import type { Priority, TodoType } from "@/features/todos/types/todo.types";
 import * as yup from "yup";
-import { todoSchema } from "./Schema";
-import { Button } from "./ui/button";
+import { todoSchema } from "../schemas/todo.schema";
+import { Button } from "@/components/ui/button";
 import { MdEdit } from "react-icons/md";
 
 type EditTodoModalProps = {
@@ -45,8 +45,6 @@ const EditTodoModal = ({ editTodo, todo }: EditTodoModalProps) => {
         description,
       });
 
-      setTitleError("");
-
       editTodo(todo.id, title, description, priority);
 
       setOpen(false);
@@ -71,7 +69,9 @@ const EditTodoModal = ({ editTodo, todo }: EditTodoModalProps) => {
         <MdEdit />{" "}
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>Edit Todo</DialogHeader>
+        <DialogHeader>
+          <DialogTitle>Edit Todo</DialogTitle>
+        </DialogHeader>
 
         <div>
           <label htmlFor="edit-title">Title</label>
@@ -118,7 +118,9 @@ const EditTodoModal = ({ editTodo, todo }: EditTodoModalProps) => {
             <option value="high">High</option>
           </select>
         </div>
-        <Button className="cursor-pointer" onClick={handleEditTodo}>Save Changes</Button>
+        <Button className="cursor-pointer" onClick={handleEditTodo}>
+          Save Changes
+        </Button>
       </DialogContent>
     </Dialog>
   );

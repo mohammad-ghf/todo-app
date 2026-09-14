@@ -1,6 +1,6 @@
-import { FaCheckCircle, FaTrash, FaRegCircle } from "react-icons/fa";
+import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 import { MdDragHandle } from "react-icons/md";
-import type { Priority, TodoType } from "../types/todo";
+import type { Priority, TodoType } from "../types/todo.types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TodoDescription from "./TodoDescription";
