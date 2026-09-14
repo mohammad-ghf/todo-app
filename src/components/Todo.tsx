@@ -5,6 +5,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TodoDescription from "./TodoDescription";
 import EditTodoModal from "./EditTodoModal";
+import DeleteTodoDialog from "./DeleteTodoDialog";
 
 type TodoProp = {
   todo: TodoType;
@@ -19,7 +20,6 @@ type TodoProp = {
 };
 
 const Todo = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
-
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: todo.id,
@@ -78,12 +78,7 @@ const Todo = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
           {todo.completed ? <FaCheckCircle /> : <FaRegCircle />}
         </button>
 
-        <button
-          onClick={() => deleteTodo(todo.id)}
-          className="cursor-pointer text-black dark:text-white"
-        >
-          <FaTrash />
-        </button>
+        <DeleteTodoDialog onConfirm={() => deleteTodo(todo.id)} />
       </div>
     </div>
   );
