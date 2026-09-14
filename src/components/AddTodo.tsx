@@ -8,6 +8,8 @@ import {
 import type { Priority } from "@/types/todo";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { todoSchema } from "./Schema";
+import * as yup from "yup";
 
 type AddTodoPProps = {
   addTodo: (title: string, description: string, priority: Priority) => void;
@@ -20,18 +22,32 @@ const AddTodo = ({ addTodo, input, priority }: AddTodoPProps) => {
   const [description, setDescription] = useState("");
   const [todopriority, setTodopriority] = useState<Priority>(priority);
   const [open, setOpen] = useState(false);
+  const [titleError, setTitleError] = useState("");
 
   useEffect(() => {
     setTitle(input);
     setTodopriority(priority);
   }, [input, priority]);
 
-  const handleAddTodo = () => {
-    if (!title.trim()) return false;
+  const handleAddTodo = async () => {
+    try {
+      await todoSchema.validate({
+        title,
+        description,
+      });
 
-    addTodo(title, description, todopriority);
+      setTitleError("");
 
-    return true;
+      addTodo(title, description, todopriority);
+
+      setTitle("");
+      setDescription("");
+      setOpen(false);
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        setTitleError(error.message);
+      }
+    }
   };
 
   return (
@@ -51,16 +67,28 @@ const AddTodo = ({ addTodo, input, priority }: AddTodoPProps) => {
           </DialogHeader>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="">Title</label>
+            <label htmlFor="">Title *</label>
 
             <input
-              className="w-full rounded-md border px-3 py-2 outline-none"
+              className={`w-full rounded-md border px-3 py-2 outline-none ${
+                titleError
+                  ? "border-red-500 focus:ring-1 focus:ring-red-500"
+                  : "border-gray-300"
+              }`}
               type="text"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (titleError) {
+                  setTitleError("");
+                }
+              }}
               placeholder="Title"
-              maxLength={15}
             />
+
+            {titleError && (
+              <p className="mt-1 text-xs text-red-500">{titleError}</p>
+            )}
           </div>
 
           <div className="flex flex-col">
@@ -71,7 +99,6 @@ const AddTodo = ({ addTodo, input, priority }: AddTodoPProps) => {
               placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              maxLength={100}
             ></textarea>
           </div>
           <div>
@@ -94,17 +121,7 @@ const AddTodo = ({ addTodo, input, priority }: AddTodoPProps) => {
           </div>
 
           <div>
-            <Button
-              onClick={() => {
-                const added = handleAddTodo();
-
-                if (added) {
-                  setOpen(false);
-                  setDescription("");
-                  setTitle("");
-                }
-              }}
-            >
+            <Button className="cursor-pointer" onClick={handleAddTodo}>
               {" "}
               Add Task
             </Button>

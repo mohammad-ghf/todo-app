@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { FaCheckCircle, FaTrash, FaRegCircle, FaSave } from "react-icons/fa";
 import { MdEdit, MdDragHandle } from "react-icons/md";
-import type { Priority } from "../types/todo";
+import type { TodoType } from "../types/todo";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import TodoDescription from "./TodoDescription";
 
 type TodoProp = {
-  todo: {
-    id: number;
-    title: string;
-    completed: boolean;
-    priority: Priority;
-  };
+  todo: TodoType;
   completeTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
   editTodo: (id: number, title: string) => void;
@@ -71,15 +67,25 @@ const Task = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
           </div>
         ) : (
           <>
-            <p
-              className={`wrap-break-word text-sm text-black md:text-base dark:text-white ${
-                todo.completed ? "line-through" : ""
-              }`}
-            >
-              {todo.title}
-            </p>
+            <div>
+              <div
+                className={`wrap-break-word text-sm text-black md:text-base dark:text-white ${
+                  todo.completed ? "line-through" : ""
+                }`}
+              >
+                {todo.description.length === 0 ? (
+                  <p>{todo.title}</p>
+                ) : (
+                  <TodoDescription
+                    title={todo.title}
+                    description={todo.description}
+                    todoId={todo.id}
+                  />
+                )}
+              </div>
+            </div>
 
-            <p className="mt-1 text-xs text-gray-700 dark:text-gray-300">
+            <p className="text-xs text-gray-700 dark:text-gray-300">
               priority: {todo.priority}
             </p>
           </>
