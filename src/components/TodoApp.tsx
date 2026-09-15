@@ -74,25 +74,26 @@ function TodoApp() {
         <div className="flex justify-between items-center">
           <h1 className="text-black dark:text-white text-3xl">TODOS</h1>
           <div className="flex items-center gap-3.5">
-            <select
-              onChange={(e) => setFilter(e.target.value as Filter)}
-              value={filter}
-              className="bg-gray-700 dark:bg-purple-900 text-white p-1"
-            >
-              <option value="all">all</option>
-              <option value="active">active</option>
-              <option value="completed">completed</option>
-            </select>
             <Theme darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
         </div>
-        <TodoForm
-          input={input}
-          setInput={setInput}
-          priority={priority}
-          setPriority={setPriority}
-          addTodo={addTodo}
-        />
+        <div>
+          <TodoForm
+            input={input}
+            setInput={setInput}
+            priority={priority}
+            setPriority={setPriority}
+            filter={filter}
+            setFilter={setFilter}
+          />
+
+          <button
+            onClick={addTodo}
+            className="w-full py-3 mb-6 bg-gray-700 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 text-sm rounded-md"
+          >
+            Add Todo
+          </button>
+        </div>
 
         <div>
           <h1 className="text-center text-black dark:text-white text-xl">

@@ -1,28 +1,30 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { Priority } from "../types/todo";
+import type { Filter, Priority } from "../types/todo";
 
 type TodoFormProps = {
   input: string;
   priority: Priority;
   setInput: Dispatch<SetStateAction<string>>;
   setPriority: Dispatch<SetStateAction<Priority>>;
-  addTodo: () => void;
+  filter: Filter;
+  setFilter: Dispatch<SetStateAction<Filter>>
 };
 
 const TodoForm = ({
-  addTodo,
   input,
   priority,
   setInput,
   setPriority,
+  filter,
+  setFilter
 }: TodoFormProps) => {
   return (
-    <div className="flex flex-wrap gap-2 justify-center my-8">
+    <div className="flex flex-wrap gap-2 justify-center mt-8 mb-3.5">
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
         type="text"
-        className="flex-4 border-gray-500 outline-none border-2 p-2  placeholder-gray-500 text-black dark:text-white rounded-md"
+        className="flex-1 border-gray-500 outline-none border-2 p-2  placeholder-gray-500 text-black dark:text-white rounded-md"
         placeholder="Add Task"
       />
 
@@ -36,12 +38,17 @@ const TodoForm = ({
         <option value="high">high</option>
       </select>
 
-      <button
-        onClick={addTodo}
-        className="flex-1 py-3 bg-gray-700 cursor-pointerbg-gray-500 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 text-sm rounded-md"
+      <select
+        onChange={(e) => setFilter(e.target.value as Filter)}
+        value={filter}
+        className="bg-gray-700 dark:bg-purple-800 dark:hover:bg-purple-900 text-white rounded-md cursor-pointer outline-none"
       >
-        Add Todo
-      </button>
+        <option className="cursor-pointer" value="all">all</option>
+        <option className="cursor-pointer" value="active">active</option>
+        <option className="cursor-pointer" value="completed">completed</option>
+      </select>
+
+
     </div>
   );
 };
