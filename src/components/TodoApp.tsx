@@ -4,6 +4,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import Theme from "./Theme";
+import AddTodo from "./AddTodo";
 
 function TodoApp() {
   const [darkMode, setDarkMode] = useLocalStorage<boolean>("darkMode", false);
@@ -19,6 +20,7 @@ function TodoApp() {
       title: input,
       completed: false,
       priority: priority,
+      description:""
     };
 
     setTodos((prev) => [...prev, newTodo]);
@@ -87,12 +89,7 @@ function TodoApp() {
             setFilter={setFilter}
           />
 
-          <button
-            onClick={addTodo}
-            className="w-full py-3 mb-6 bg-gray-700 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 text-sm rounded-md"
-          >
-            Add Todo
-          </button>
+          <AddTodo addTodo={addTodo} />
         </div>
 
         <div>
