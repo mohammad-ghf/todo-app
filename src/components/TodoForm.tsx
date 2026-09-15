@@ -41,7 +41,7 @@ const TodoForm = ({
       <select
         onChange={(e) => setFilter(e.target.value as Filter)}
         value={filter}
-        className="bg-gray-700 dark:bg-purple-800 dark:hover:bg-purple-900 text-white rounded-md cursor-pointer outline-none"
+        className="bg-gray-700 dark:bg-purple-800 dark:hover:bg-purple-900 text-white rounded-md cursor-pointer outline-none text-sm"
       >
         <option className="cursor-pointer" value="all">all</option>
         <option className="cursor-pointer" value="active">active</option>
