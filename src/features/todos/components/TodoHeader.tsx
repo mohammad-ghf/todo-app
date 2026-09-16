@@ -19,7 +19,7 @@ export const TodoHeader = ({darkMode,search,setDarkMode,setSearch} : TodoHeaderP
           <input
             type="search"
             placeholder="Search"
-            className="dark:border-white border-black border outline-none px-2 py-1 rounded-md w-56"
+            className="dark:border-white border-black border outline-none px-2 py-1 rounded-md w-56 hidden md:block"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
