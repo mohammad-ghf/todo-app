@@ -11,6 +11,11 @@ import { Button } from "@/components/ui/button";
 import { todoSchema } from "../schemas/todo.schema";
 import * as yup from "yup";
 
+type FormErrors = {
+  title?: string;
+  description?: string;
+};
+
 type AddTodoProps = {
   addTodo: (title: string, description: string, priority: Priority) => void;
   input: string;
@@ -23,7 +28,7 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
   const [description, setDescription] = useState("");
   const [todoPriority, setTodoPriority] = useState<Priority>("medium");
   const [open, setOpen] = useState(false);
-  const [titleError, setTitleError] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
 
   useEffect(() => {
     if (!open) return;
@@ -31,26 +36,38 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
     setTitle(input);
     setTodoPriority(priority);
     setDescription("");
-    setTitleError("");
+    setErrors({});
   }, [open, input, priority]);
 
   const handleAddTodo = async () => {
     try {
-      await todoSchema.validate({
-        title,
-        description,
-      });
+      await todoSchema.validate(
+        {
+          title,
+          description,
+        },
+        {
+          abortEarly: false,
+        },
+      );
 
-      setTitleError("");
+      setErrors({});
       addTodo(title, description, todoPriority);
       setTitle("");
       setDescription("");
       setOpen(false);
       onSuccess();
-
     } catch (error) {
       if (error instanceof yup.ValidationError) {
-        setTitleError(error.message);
+        const formErrors: FormErrors = {};
+
+        error.inner.forEach((validationError) => {
+          if (validationError.path) {
+            formErrors[validationError.path as keyof FormErrors] =
+              validationError.message;
+          }
+        });
+        setErrors(formErrors);
       }
     }
   };
@@ -76,7 +93,7 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
           <input
             id="todo-title"
             className={`w-full rounded-md border px-3 py-2 outline-none ${
-              titleError
+              errors.title
                 ? "border-red-500 focus:ring-1 focus:ring-red-500"
                 : "border-gray-300"
             }`}
@@ -84,15 +101,12 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
-              if (titleError) {
-                setTitleError("");
-              }
             }}
             placeholder="Title"
           />
 
-          {titleError && (
-            <p className="mt-1 text-xs text-red-500">{titleError}</p>
+          {errors.title && (
+            <p className="mt-1 text-xs text-red-500">{errors.title}</p>
           )}
         </div>
 
@@ -106,6 +120,10 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
+
+          {errors.description && (
+            <p className="mt-1 text-xs text-red-500">{errors.description}</p>
+          )}
         </div>
         <div>
           <label htmlFor="todo-priority">Priority</label>
