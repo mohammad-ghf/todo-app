@@ -1,10 +1,16 @@
 import { useMemo, useState } from "react";
-import type { Filter, Priority, TodoType } from "../types/todo.types";
+import type {
+  Filter,
+  Priority,
+  priorityFilter,
+  TodoType,
+} from "../types/todo.types";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 const useTodos = () => {
   const [todos, setTodos] = useLocalStorage<TodoType[]>("todos", []);
   const [filter, setFilter] = useState<Filter>("all");
+  const [priorityFilter, setPriorityFilter] = useState<priorityFilter>("all");
   const [search, setSearch] = useState("");
 
   const addTodo = (title: string, description: string, priority: Priority) => {
@@ -117,9 +123,19 @@ const useTodos = () => {
         return todo.completed;
       }
 
+      if (priorityFilter === "low") {
+        return todo.priority === "low";
+      }
+      if (priorityFilter === "medium") {
+        return todo.priority === "medium";
+      }
+      if (priorityFilter === "high") {
+        return todo.priority === "high";
+      }
+
       return true;
     });
-  }, [todos, filter, search]);
+  }, [todos, filter, priorityFilter ,search]);
 
   const taskLeftQty = useMemo(
     () => todos.filter((todo) => !todo.completed).length,
@@ -136,6 +152,8 @@ const useTodos = () => {
     filteredTodos,
     filter,
     setFilter,
+    priorityFilter,
+    setPriorityFilter,
     search,
     setSearch,
     addTodo,

@@ -7,7 +7,6 @@ import AddTodo from "@/features/todos/components/AddTodo";
 import useTodos from "@/features/todos/hooks/useTodos";
 import { TodoHeader } from "@/features/todos/components/TodoHeader";
 const Home = () => {
-
   const [darkMode, setDarkMode] = useLocalStorage<boolean>("darkMode", false);
   const [input, setInput] = useState<string>("");
   const [priority, setPriority] = useState<Priority>("medium");
@@ -19,6 +18,8 @@ const Home = () => {
     editTodo,
     filter,
     filteredTodos,
+    priorityFilter,
+    setPriorityFilter,
     moveTodo,
     search,
     setFilter,
@@ -41,10 +42,10 @@ const Home = () => {
             <TodoForm
               search={search}
               setSearch={setSearch}
-              priority={priority}
-              setPriority={setPriority}
               filter={filter}
               setFilter={setFilter}
+              priorityFilter={priorityFilter}
+              setPriorityFilter={setPriorityFilter}
             />
 
             <AddTodo
