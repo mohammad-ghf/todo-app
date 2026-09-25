@@ -16,13 +16,14 @@ const TodoDescription = ({
   todoId,
   title,
 }: todoDescriptionProps) => {
-
   return (
     <Accordion>
       <AccordionItem value={`description-${todoId}`}>
         <AccordionTrigger>{title}</AccordionTrigger>
 
-        <AccordionContent>{description}</AccordionContent>
+        <AccordionContent>
+          {description.trim() ? <p>{description}</p> : <p> Nothing to show</p>}
+        </AccordionContent>
       </AccordionItem>
     </Accordion>
   );

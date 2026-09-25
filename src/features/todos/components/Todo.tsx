@@ -45,28 +45,22 @@ const Todo = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
       </div>
 
       <div className="min-w-0 flex-1">
-        <div>
-          <div
-            className={`wrap-break-word text-sm text-black md:text-base dark:text-white ${
-              todo.completed ? "line-through" : ""
-            }`}
-          >
-            {todo.description.length === 0 ? (
-              <p>{todo.title}</p>
-            ) : (
-              <TodoDescription
-                title={todo.title}
-                description={todo.description}
-                todoId={todo.id}
-              />
-            )}
-          </div>
+        <div
+          className={`wrap-break-word text-sm text-black md:text-base dark:text-white ${
+            todo.completed ? "line-through" : ""
+          }`}
+        >
+          <TodoDescription
+            title={todo.title}
+            description={todo.description}
+            todoId={todo.id}
+          />
         </div>
-
-        <p className="text-xs text-gray-700 dark:text-gray-300">
-          priority: {todo.priority}
-        </p>
       </div>
+
+      <p className="text-xs text-gray-700 dark:text-gray-300">
+        priority: {todo.priority}
+      </p>
 
       <div className="flex shrink-0 items-center gap-2 text-lg md:gap-3 md:text-xl">
         {!todo.completed && <EditTodoModal todo={todo} editTodo={editTodo} />}
@@ -78,7 +72,10 @@ const Todo = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
           {todo.completed ? <FaCheckCircle /> : <FaRegCircle />}
         </button>
 
-        <DeleteTodoDialog onConfirm={() => deleteTodo(todo.id)} title={todo.title} />
+        <DeleteTodoDialog
+          onConfirm={() => deleteTodo(todo.id)}
+          title={todo.title}
+        />
       </div>
     </div>
   );

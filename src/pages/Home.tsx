@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { Priority } from "@/features/todos/types/todo.types";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import TodoForm from "../features/todos/components/TodoForm";
 import TodoList from "../features/todos/components/TodoList";
@@ -10,7 +9,6 @@ import DeleteAllTaskDialog from "@/features/todos/components/DeleteAllTaskDialog
 const Home = () => {
   const [darkMode, setDarkMode] = useLocalStorage<boolean>("darkMode", false);
   const [input, setInput] = useState<string>("");
-  const [priority, setPriority] = useState<Priority>("medium");
 
   const {
     addTodo,
@@ -53,7 +51,6 @@ const Home = () => {
             <AddTodo
               addTodo={addTodo}
               input={input}
-              priority={priority}
               onSuccess={() => setInput("")}
             />
           </div>
@@ -75,7 +72,7 @@ const Home = () => {
             ) : (
               <DeleteAllTaskDialog deleteAllTask={deleteAllTask} />
             )}
-            
+
             <p className="text-black dark:text-white text-sm">
               {taskLeftQty} task left
             </p>

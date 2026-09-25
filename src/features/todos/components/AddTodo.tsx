@@ -6,7 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { Priority } from "@/features/todos/types/todo.types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { todoSchema } from "../schemas/todo.schema";
 import * as yup from "yup";
@@ -19,25 +19,15 @@ type FormErrors = {
 type AddTodoProps = {
   addTodo: (title: string, description: string, priority: Priority) => void;
   input: string;
-  priority: Priority;
   onSuccess: () => void;
 };
 
-const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
+const AddTodo = ({ addTodo, input, onSuccess }: AddTodoProps) => {
   const [title, setTitle] = useState(input);
   const [description, setDescription] = useState("");
   const [todoPriority, setTodoPriority] = useState<Priority>("medium");
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
-
-  useEffect(() => {
-    if (!open) return;
-
-    setTitle(input);
-    setTodoPriority(priority);
-    setDescription("");
-    setErrors({});
-  }, [open, input, priority]);
 
   const handleAddTodo = async () => {
     try {
@@ -72,6 +62,13 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
     }
   };
 
+  const handleReset = () => {
+    setTitle("");
+    setDescription("");
+    setErrors({});
+    setTodoPriority("medium");
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
@@ -88,7 +85,9 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
         </DialogHeader>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="todo-title">Title *</label>
+          <label htmlFor="todo-title">
+            Title <span className="text-red-500 text-2xl">*</span>
+          </label>
 
           <input
             id="todo-title"
@@ -145,8 +144,12 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
           </select>
         </div>
 
-        <div>
-          <Button className="cursor-pointer w-full" onClick={handleAddTodo}>
+        <div className="flex space-x-2.5">
+          <Button className="cursor-pointer" onClick={handleReset}>
+            Reset
+          </Button>
+
+          <Button className="cursor-pointer" onClick={handleAddTodo}>
             {" "}
             Add Task
           </Button>

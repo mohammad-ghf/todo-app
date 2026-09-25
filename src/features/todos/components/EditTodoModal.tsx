@@ -55,6 +55,13 @@ const EditTodoModal = ({ editTodo, todo }: EditTodoModalProps) => {
     }
   };
 
+  const handleReset = () => {
+    setTitle(todo.title);
+    setDescription(todo.description);
+    setTitleError("");
+    setPriority(todo.priority);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
@@ -118,9 +125,16 @@ const EditTodoModal = ({ editTodo, todo }: EditTodoModalProps) => {
             <option value="high">High</option>
           </select>
         </div>
-        <Button className="cursor-pointer" onClick={handleEditTodo}>
-          Save Changes
-        </Button>
+
+        <div className="space-x-2.5">
+          <Button className="cursor-pointer" onClick={handleReset}>
+            Reset
+          </Button>
+
+          <Button className="cursor-pointer" onClick={handleEditTodo}>
+            Save Changes
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
