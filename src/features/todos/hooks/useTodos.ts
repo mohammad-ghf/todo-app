@@ -18,7 +18,15 @@ const useTodos = () => {
       description: description.trim(),
     };
 
-    setTodos((prev) => [...prev, newTodo]);
+    setTodos((prev) => {
+      const newTodos = [...prev, newTodo];
+
+      return [
+        ...newTodos.filter((todo) => todo.priority === "high"),
+        ...newTodos.filter((todo) => todo.priority === "medium"),
+        ...newTodos.filter((todo) => todo.priority === "low"),
+      ];
+    });
   };
 
   const completeTodo = (id: number) => {
@@ -39,18 +47,24 @@ const useTodos = () => {
     description: string,
     priority: Priority,
   ) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
+    setTodos((prev) => {
+      const updatedTodos = prev.map((todo) =>
         todo.id === id
           ? {
               ...todo,
-              title: title,
+              title: title.trim(),
               description: description.trim(),
               priority,
             }
           : todo,
-      ),
-    );
+      );
+
+      return [
+        ...updatedTodos.filter((todo) => todo.priority === "high"),
+        ...updatedTodos.filter((todo) => todo.priority === "medium"),
+        ...updatedTodos.filter((todo) => todo.priority === "low"),
+      ];
+    });
   };
 
   const moveTodo = (activeId: number, overId: number) => {
@@ -58,15 +72,28 @@ const useTodos = () => {
       const oldIndex = prev.findIndex((todo) => todo.id === activeId);
       const newIndex = prev.findIndex((todo) => todo.id === overId);
 
-      if(oldIndex === -1 || newIndex === -1) {
-        return prev
+      if (oldIndex === -1 || newIndex === -1) {
+        return prev;
       }
-      
+
+      const activeTodo = prev[oldIndex];
+      const overTodo = prev[newIndex];
+
+      if (!activeTodo || !overTodo) {
+        return prev;
+      }
+
+      if (activeTodo.priority !== overTodo.priority) {
+        return prev;
+      }
+
       const newTodos = [...prev];
 
       const [movedTodo] = newTodos.splice(oldIndex, 1);
 
-      if (!movedTodo) return prev;
+      if (!movedTodo) {
+        return prev;
+      }
 
       newTodos.splice(newIndex, 0, movedTodo);
 

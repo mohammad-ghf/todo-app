@@ -1,32 +1,36 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { Filter, Priority } from "../types/todo.types";
+import { FaSearch } from "react-icons/fa";
 
 type TodoFormProps = {
-  input: string;
+  search: string;
   priority: Priority;
-  setInput: Dispatch<SetStateAction<string>>;
+  setSearch: Dispatch<SetStateAction<string>>;
   setPriority: Dispatch<SetStateAction<Priority>>;
   filter: Filter;
   setFilter: Dispatch<SetStateAction<Filter>>;
 };
 
 const TodoForm = ({
-  input,
+  search,
   priority,
-  setInput,
+  setSearch,
   setPriority,
   filter,
   setFilter,
 }: TodoFormProps) => {
   return (
     <div className="flex flex-wrap gap-2 justify-center mt-8 mb-3.5">
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        type="text"
-        className="flex-1 border-gray-500 outline-none border-2 p-2  placeholder-gray-500 text-black dark:text-white rounded-md"
-        placeholder="Add Task Name"
-      />
+      <div className="flex flex-1 items-center relative">
+        <input
+          type="search"
+          placeholder="Search"
+          className="flex-1 border-gray-500 outline-none border-2 p-2  placeholder-gray-500 text-black dark:text-white rounded-md"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <FaSearch className="absolute right-3" />
+      </div>
 
       <div className="flex gap-1">
         <select

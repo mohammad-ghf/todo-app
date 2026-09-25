@@ -34,10 +34,41 @@ const TodoList = ({
     moveTodo(Number(active.id), Number(over.id));
   };
 
+  const highTodos = todos.filter((todo) => todo.priority === "high");
+  const mediumTodos = todos.filter((todo) => todo.priority === "medium");
+  const lowTodos = todos.filter((todo) => todo.priority === "low");
+
+  const renderGroup = (title: string, groupTodos: TodoType[]) => {
+    if (groupTodos.length === 0) return null;
+
+    return (
+      <section className="mb-5">
+        <h2 className="mb-2 text-sm font-semibold uppercase text-gray-700 dark:text-gray-300">
+          {title}
+        </h2>
+
+        <SortableContext
+          items={groupTodos.map((todo) => todo.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {groupTodos.map((todo) => (
+            <Todo
+              key={todo.id}
+              todo={todo}
+              completeTodo={completeTodo}
+              deleteTodo={deleteTodo}
+              editTodo={editTodo}
+            />
+          ))}
+        </SortableContext>
+      </section>
+    );
+  };
+
   return (
     <div>
       {todos.length === 0 ? (
-        <p className="text-black dark:text-white text-center mt-7">
+        <p className="mt-7 text-center text-black dark:text-white">
           todo is empty
         </p>
       ) : (
@@ -45,20 +76,11 @@ const TodoList = ({
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <SortableContext
-            items={todos.map((todo) => todo.id)}
-            strategy={verticalListSortingStrategy}
-          >
-            {todos.map((todo) => (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                completeTodo={completeTodo}
-                deleteTodo={deleteTodo}
-                editTodo={editTodo}
-              />
-            ))}
-          </SortableContext>
+          {renderGroup("High Priority", highTodos)}
+
+          {renderGroup("Medium Priority", mediumTodos)}
+
+          {renderGroup("Low Priority", lowTodos)}
         </DndContext>
       )}
     </div>

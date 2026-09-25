@@ -8,7 +8,7 @@ import useTodos from "@/features/todos/hooks/useTodos";
 import { TodoHeader } from "@/features/todos/components/TodoHeader";
 const Home = () => {
 
-    const [darkMode, setDarkMode] = useLocalStorage<boolean>("darkMode", false);
+  const [darkMode, setDarkMode] = useLocalStorage<boolean>("darkMode", false);
   const [input, setInput] = useState<string>("");
   const [priority, setPriority] = useState<Priority>("medium");
 
@@ -39,8 +39,8 @@ const Home = () => {
           />
           <div>
             <TodoForm
-              input={input}
-              setInput={setInput}
+              search={search}
+              setSearch={setSearch}
               priority={priority}
               setPriority={setPriority}
               filter={filter}
