@@ -6,6 +6,7 @@ import TodoList from "../features/todos/components/TodoList";
 import AddTodo from "@/features/todos/components/AddTodo";
 import useTodos from "@/features/todos/hooks/useTodos";
 import { TodoHeader } from "@/features/todos/components/TodoHeader";
+import DeleteAllTaskDialog from "@/features/todos/components/DeleteAllTaskDialog";
 const Home = () => {
   const [darkMode, setDarkMode] = useLocalStorage<boolean>("darkMode", false);
   const [input, setInput] = useState<string>("");
@@ -72,12 +73,7 @@ const Home = () => {
             {todos.length === 0 ? (
               ""
             ) : (
-              <button
-                onClick={deleteAllTask}
-                className="bg-gray-700 dark:bg-purple-800  text-white px-4 py-2 my-3 cursor-pointer active:scale-95 rounded-md"
-              >
-                Delete All Task
-              </button>
+              <DeleteAllTaskDialog deleteAllTask={deleteAllTask} />
             )}
             
             <p className="text-black dark:text-white text-sm">
