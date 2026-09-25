@@ -12,9 +12,10 @@ import { FaTrash } from "react-icons/fa";
 
 type DeleteTodoProps = {
   onConfirm: () => void;
+  title: string;
 };
 
-const DeleteTodoDialog = ({ onConfirm }: DeleteTodoProps) => {
+const DeleteTodoDialog = ({ onConfirm, title }: DeleteTodoProps) => {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -27,7 +28,7 @@ const DeleteTodoDialog = ({ onConfirm }: DeleteTodoProps) => {
 
           <DialogDescription>
             {" "}
-            Are you sure you want to delete this task?
+            Are you sure you want to delete {title}?
           </DialogDescription>
         </DialogHeader>
 

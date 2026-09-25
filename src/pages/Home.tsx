@@ -27,6 +27,7 @@ const Home = () => {
     taskCompleteQty,
     taskLeftQty,
     todos,
+    deleteAllTask,
   } = useTodos();
   return (
     <div>
@@ -67,6 +68,18 @@ const Home = () => {
               editTodo={editTodo}
               moveTodo={moveTodo}
             />
+
+            {todos.length === 0 ? (
+              ""
+            ) : (
+              <button
+                onClick={deleteAllTask}
+                className="bg-gray-700 dark:bg-purple-800  text-white px-4 py-2 my-3 cursor-pointer active:scale-95 rounded-md"
+              >
+                Delete All Task
+              </button>
+            )}
+            
             <p className="text-black dark:text-white text-sm">
               {taskLeftQty} task left
             </p>

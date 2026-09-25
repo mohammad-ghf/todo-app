@@ -78,7 +78,7 @@ const Todo = ({ todo, completeTodo, deleteTodo, editTodo }: TodoProp) => {
           {todo.completed ? <FaCheckCircle /> : <FaRegCircle />}
         </button>
 
-        <DeleteTodoDialog onConfirm={() => deleteTodo(todo.id)} />
+        <DeleteTodoDialog onConfirm={() => deleteTodo(todo.id)} title={todo.title} />
       </div>
     </div>
   );

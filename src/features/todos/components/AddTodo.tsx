@@ -84,7 +84,7 @@ const AddTodo = ({ addTodo, input, priority, onSuccess }: AddTodoProps) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>NewTodo</DialogTitle>
+          <DialogTitle>NewTask</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-2">

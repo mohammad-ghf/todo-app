@@ -147,6 +147,10 @@ const useTodos = () => {
     [todos],
   );
 
+  const deleteAllTask = () => {
+    setTodos([])
+  }
+
   return {
     todos,
     filteredTodos,
@@ -163,6 +167,7 @@ const useTodos = () => {
     moveTodo,
     taskLeftQty,
     taskCompleteQty,
+    deleteAllTask
   };
 };
 
