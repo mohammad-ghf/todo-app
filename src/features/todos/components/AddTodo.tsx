@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { todoSchema } from "../schemas/todo.schema";
 import * as yup from "yup";
+import { CirclePlus, NotebookPen, Plus } from "lucide-react";
 
 type FormErrors = {
   title?: string;
@@ -73,9 +74,10 @@ const AddTodo = ({ addTodo, input, onSuccess }: AddTodoProps) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <button className="w-full py-3 mb-6 bg-gray-700 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 text-sm rounded-md"></button>
+          <button className="w-full flex items-center justify-center py-3 mb-6 bg-gray-700 dark:bg-purple-800 text-white cursor-pointer dark:hover:bg-purple-900 rounded-md"></button>
         }
       >
+        <Plus className="" />
         Add Todo
       </DialogTrigger>
 
@@ -86,7 +88,7 @@ const AddTodo = ({ addTodo, input, onSuccess }: AddTodoProps) => {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="todo-title">
-            Title <span className="text-red-500 text-2xl">*</span>
+            Title <span className="text-red-500 text-md">*</span>
           </label>
 
           <input
@@ -146,11 +148,13 @@ const AddTodo = ({ addTodo, input, onSuccess }: AddTodoProps) => {
 
         <div className="flex space-x-2.5">
           <Button className="cursor-pointer" onClick={handleReset}>
+            <NotebookPen />
             Reset
           </Button>
 
           <Button className="cursor-pointer" onClick={handleAddTodo}>
             {" "}
+            <CirclePlus />
             Add Task
           </Button>
         </div>

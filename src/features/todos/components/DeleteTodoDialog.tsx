@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Trash } from "lucide-react";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
@@ -39,8 +40,9 @@ const DeleteTodoDialog = ({ onConfirm, title }: DeleteTodoProps) => {
               onConfirm();
               setOpen(false);
             }}
-            className="rounded-md border px-4 py-2 cursor-pointer"
+            className="rounded-md border px-4 py-2 cursor-pointer flex items-center gap-1 text-red-700 text-base"
           >
+            <Trash className="text-red-700" />
             Delete
           </button>
         </DialogFooter>

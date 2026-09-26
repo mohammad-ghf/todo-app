@@ -11,6 +11,7 @@ import * as yup from "yup";
 import { todoSchema } from "../schemas/todo.schema";
 import { Button } from "@/components/ui/button";
 import { MdEdit } from "react-icons/md";
+import { NotebookPen, SaveCheck } from "lucide-react";
 
 type EditTodoModalProps = {
   todo: TodoType;
@@ -128,10 +129,12 @@ const EditTodoModal = ({ editTodo, todo }: EditTodoModalProps) => {
 
         <div className="space-x-2.5">
           <Button className="cursor-pointer" onClick={handleReset}>
+            <NotebookPen />
             Reset
           </Button>
 
           <Button className="cursor-pointer" onClick={handleEditTodo}>
+            <SaveCheck />
             Save Changes
           </Button>
         </div>

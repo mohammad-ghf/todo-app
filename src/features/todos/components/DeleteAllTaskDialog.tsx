@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { CalendarMinus, Trash } from "lucide-react";
 import { useState } from "react";
 
 type deleteAllTaskProps = {
@@ -21,9 +22,10 @@ const DeleteAllTaskDialog = ({ deleteAllTask }: deleteAllTaskProps) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <button className="bg-gray-700 dark:bg-purple-800  text-white px-4 py-2 my-3 cursor-pointer active:scale-95 rounded-md" />
+          <button className="flex items-center gap-2 bg-gray-700 dark:bg-purple-800 text-white px-4 py-2 my-3 cursor-pointer active:scale-95 rounded-md" />
         }
       >
+        <CalendarMinus size={20} />
         Delete All Task
       </DialogTrigger>
 
@@ -35,8 +37,9 @@ const DeleteAllTaskDialog = ({ deleteAllTask }: deleteAllTaskProps) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button onClick={deleteAllTask} className="cursor-pointer">
-            Delete
+          <Button onClick={deleteAllTask} className="cursor-pointer flex items-center">
+            Delete All
+            <Trash />
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -45,12 +48,3 @@ const DeleteAllTaskDialog = ({ deleteAllTask }: deleteAllTaskProps) => {
 };
 
 export default DeleteAllTaskDialog;
-
-{
-  /* <button
-  onClick={deleteAllTask}
-  className="bg-gray-700 dark:bg-purple-800  text-white px-4 py-2 my-3 cursor-pointer active:scale-95 rounded-md"
->
-  Delete All Task
-</button>; */
-}

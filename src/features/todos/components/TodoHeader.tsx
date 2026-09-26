@@ -1,4 +1,5 @@
 import Theme from "@/components/Theme";
+import { ListTodo } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 
 type TodoHeaderProps = {
@@ -12,7 +13,7 @@ type TodoHeaderProps = {
 export const TodoHeader = ({darkMode,setDarkMode} : TodoHeaderProps) => {
   return (
     <div className="flex justify-between items-center">
-      <h1 className="text-black dark:text-white text-3xl">TODOS</h1>
+      <h1 className="text-black dark:text-white text-3xl flex items-center gap-2">TODOS <ListTodo /></h1>
       <div className="flex items-center gap-3.5">
         <Theme darkMode={darkMode} setDarkMode={setDarkMode} />
       </div>
